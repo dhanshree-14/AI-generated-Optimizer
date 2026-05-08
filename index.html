@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Energy Optimizer</title>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="logo">
+                <i data-lucide="zap" class="icon-zap"></i>
+                <h1>Energy Optimizer</h1>
+            </div>
+            <button id="themeToggle" class="theme-btn" aria-label="Toggle Theme">
+                <i data-lucide="sun" id="sunIcon"></i>
+                <i data-lucide="moon" id="moonIcon" style="display: none;"></i>
+            </button>
+        </header>
+
+        <main class="dashboard">
+            <!-- Left Column: Input Form -->
+            <section class="panel input-panel">
+                <h2><i data-lucide="settings-2"></i> Appliance Details</h2>
+                <form id="energyForm">
+                    <div class="form-group">
+                        <label for="applianceName">Appliance Name</label>
+                        <input type="text" id="applianceName" placeholder="e.g., Air Conditioner" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="powerRating">Power Rating (Watts)</label>
+                        <input type="number" id="powerRating" placeholder="e.g., 1500" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="dailyUsage">Daily Usage (Hours)</label>
+                        <input type="number" id="dailyUsage" placeholder="e.g., 8" required min="0.1" max="24" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="electricityRate">Electricity Rate (₹/unit)</label>
+                        <input type="number" id="electricityRate" value="8" required min="0.1" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="timeOfUse">Time of Use</label>
+                        <select id="timeOfUse">
+                            <option value="Morning">Morning (6 AM - 12 PM)</option>
+                            <option value="Afternoon">Afternoon (12 PM - 5 PM)</option>
+                            <option value="Evening">Evening (5 PM - 10 PM)</option>
+                            <option value="Night">Night (10 PM - 6 AM)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i data-lucide="cpu"></i> Analyze Usage
+                    </button>
+                </form>
+            </section>
+
+            <!-- Right Column: Results & Analytics -->
+            <section class="panel results-panel" id="resultsPanel" style="opacity: 0.5; pointer-events: none;">
+                <h2><i data-lucide="bar-chart-3"></i> AI Predictions</h2>
+                
+                <!-- Status Alert -->
+                <div id="statusAlert" class="alert-box alert-neutral">
+                    <div class="alert-icon">
+                        <i data-lucide="info" id="alertIcon"></i>
+                    </div>
+                    <div class="alert-content">
+                        <h3 id="alertTitle">Awaiting Input</h3>
+                        <p id="alertMessage">Enter appliance details to see optimization suggestions.</p>
+                        <p id="peakWarning" class="peak-warning"></p>
+                    </div>
+                </div>
+
+                <!-- Metrics Grid -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-header">Daily Energy</div>
+                        <div class="metric-value"><span id="metricEnergy">0.00</span> <span class="unit">kWh</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-header">Daily Cost</div>
+                        <div class="metric-value"><span class="currency">₹</span><span id="metricDailyCost">0.00</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-header">Monthly Cost</div>
+                        <div class="metric-value"><span class="currency">₹</span><span id="metricMonthlyCost">0.00</span></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-header">Annual Cost</div>
+                        <div class="metric-value"><span class="currency">₹</span><span id="metricAnnualCost">0.00</span></div>
+                    </div>
+                </div>
+
+                <!-- Charts Area -->
+                <div class="charts-container">
+                    <div class="chart-wrapper">
+                        <h3>Benchmark Comparison</h3>
+                        <canvas id="barChart"></canvas>
+                    </div>
+                    <div class="chart-wrapper">
+                        <h3>Usage vs Energy Profile</h3>
+                        <canvas id="scatterChart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
